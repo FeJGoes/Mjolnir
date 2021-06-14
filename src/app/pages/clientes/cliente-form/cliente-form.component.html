@@ -1,0 +1,85 @@
+<app-header *ngIf="!isRoute('registrar')"></app-header>
+<main>
+  <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlig="space-around center">
+    <h1>{{isEditMode ? "Editar Cliente" : "Cadastro de Cliente"}} </h1>
+
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" required>
+
+      <mat-error *ngIf="clienteForm.get('nome')?.errors?.required">O campo nome é obrigatório</mat-error>
+      <mat-error *ngIf="clienteForm.get('nome')?.errors?.api">{{clienteForm.get('nome')?.errors?.message}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" required>
+
+      <mat-error *ngIf="clienteForm.get('email')?.errors?.required">O campo email é obrigatório</mat-error>
+      <mat-error *ngIf="clienteForm.get('email')?.errors?.email">O campo email é inválido</mat-error>
+      <mat-error *ngIf="clienteForm.get('email')?.errors?.api">{{clienteForm.get('email')?.errors?.message}}</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field *ngIf="!isEditMode">
+      <mat-label>Senha</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" formControlName="senha" required>
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="clienteForm.get('senha')?.errors?.required">O campo senha é obrigatório</mat-error>
+      <mat-error *ngIf="clienteForm.get('senha')?.errors?.minlength">O campo senha deve conter 8 caracteres</mat-error>
+      <mat-error *ngIf="clienteForm.get('senha')?.errors?.api">{{clienteForm.get('senha')?.errors?.message}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Telefone</mat-label>
+      <input matInput [textMask]="{mask: telefoneMask}" formControlName="telefone" required>
+
+      <mat-error *ngIf="clienteForm.get('telefone')?.errors?.required">O campo telefone é obrigatório</mat-error>
+      <mat-error *ngIf="clienteForm.get('telefone')?.errors?.api">{{clienteForm.get('telefone')?.errors?.message}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Cidade</mat-label>
+      <input matInput formControlName="cidade" required>
+
+      <mat-error *ngIf="clienteForm.get('cidade')?.errors?.required">O campo cidade é obrigatório</mat-error>
+      <mat-error *ngIf="clienteForm.get('cidade')?.errors?.api">{{clienteForm.get('cidade')?.errors?.message}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field >
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="estado" required>
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let estado of estados" [value]="estado.uf">
+          {{estado.nome}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="clienteForm.get('estado')?.errors?.required">O campo estado é obrigatório</mat-error>
+    </mat-form-field>
+
+    <mat-form-field >
+      <mat-label>Planos</mat-label>
+      <mat-select formControlName="planos" required multiple>
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let plano of planos" [value]="plano.id">
+          {{plano.tipo}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="clienteForm.get('planos')?.errors?.required">O campo estado é obrigatório</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field >
+      <mat-label>Data de Nascimento</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="data_nascimento">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <br/>
+
+    <button mat-raised-button color="primary">Salvar</button>
+  </form>
+</main>

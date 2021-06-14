@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <a [routerLink]="['/home']" mat-menu-item>
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </a>
+    <a [routerLink]="['/clientes']" mat-menu-item>
+      <mat-icon>view_list</mat-icon>
+      <span>Lista de Clientes</span>
+    </a>
+    <a [routerLink]="['/clientes/cadastrar']" mat-menu-item >
+      <mat-icon>account_circle</mat-icon>
+      <span>Cadastrar Cliente</span>
+    </a>
+  </mat-menu>
+
+
+  <a class="header-title" [routerLink]="['/home']">
+    <span>Desafio Órigo</span>
+  </a>
+
+  <button class="logout-btn" mat-icon-button aria-label="Example icon button with a menu icon" (click)="logOut()">
+    <mat-icon>logout</mat-icon>
+    Sair
+  </button>
+</mat-toolbar>

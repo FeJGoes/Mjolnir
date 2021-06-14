@@ -1,26 +1,35 @@
-<div class="form-signin">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-      <p *ngIf="loginError">{{loginError}}</p>
+<main>
+  <section class="section-img">
+    <img src="assets/security.svg" alt="security">
+  </section>
+
+  <section>
+    <h1>Área do Cliente</h1>
+    <h4>Desafio - Órigo</h4>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlig="space-around center">
+
       <mat-form-field>
-          <input
-            matInput
-            placeholder="Enter your email"
-            formControlName="email"
-            required >
-          <mat-error *ngIf="!loginForm.valid">Please enter valid email id</mat-error>
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Digite o email" formControlName="email" required>
+
+        <mat-error *ngIf="loginForm.get('email')?.errors?.required">O campo email é obrigatório</mat-error>
+        <mat-error *ngIf="loginForm.get('email')?.errors?.email">O campo email é inválido</mat-error>
+        <mat-error *ngIf="loginForm.get('email')?.errors?.api">{{loginForm.get('email')?.errors?.message}}</mat-error>
       </mat-form-field>
 
       <mat-form-field>
-          <input
-            matInput
-            placeholder="Enter your password"
-            type="password"
-            formControlName="senha"
-            required >
-          <mat-error *ngIf="!loginForm.valid">Please enter password</mat-error>
-      </mat-form-field><br />
+        <mat-label>Senha</mat-label>
+        <input matInput placeholder="Digite a senha" type="password" formControlName="senha" required>
 
-      <button type="submit" mat-raised-button color="warn">Entrar</button>
-  </form>
-</div>
+        <mat-error *ngIf="loginForm.get('senha')?.errors?.required">O campo senha é obrigatório</mat-error>
+        <mat-error *ngIf="loginForm.get('senha')?.errors?.minlength">O campo senha deve conter 8 caracteres</mat-error>
+        <mat-error *ngIf="loginForm.get('senha')?.errors?.api">{{loginForm.get('senha')?.errors?.message}}</mat-error>
+      </mat-form-field>
+
+      <br />
+
+      <button mat-raised-button color="primary">Entrar</button>
+      <a [routerLink]="['/registrar']">Cadastrar-se</a>
+    </form>
+  </section>
+</main>
